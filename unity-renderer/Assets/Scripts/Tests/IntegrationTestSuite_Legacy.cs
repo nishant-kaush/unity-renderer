@@ -61,13 +61,7 @@ public class IntegrationTestSuite_Legacy
         {
             RenderProfileManifest.i.Initialize();
 
-            Environment.SetupWithBuilders
-            (
-                MessagingContextFactory.CreateDefault,
-                PlatformContextFactory.CreateDefault,
-                WorldRuntimeContextFactory.CreateDefault,
-                HUDContextFactory.CreateDefault
-            );
+            Environment.Setup(ServiceLocatorFactory.CreateDefault());
 
             SetUp_SceneController();
 
@@ -82,13 +76,7 @@ public class IntegrationTestSuite_Legacy
 
         RenderProfileManifest.i.Initialize();
 
-        Environment.SetupWithBuilders
-        (
-            MessagingContextFactory.CreateDefault,
-            PlatformContextFactory.CreateDefault,
-            WorldRuntimeContextFactory.CreateDefault,
-            HUDContextFactory.CreateDefault
-        );
+        Environment.Setup(ServiceLocatorFactory.CreateDefault());
 
         SetUp_SceneController();
         SetUp_TestScene();

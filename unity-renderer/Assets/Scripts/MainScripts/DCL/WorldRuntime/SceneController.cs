@@ -21,7 +21,7 @@ namespace DCL
 
         private Coroutine deferredDecodingCoroutine;
 
-        public void Initialize()
+        public SceneController ()
         {
             sceneSortDirty = true;
             positionDirty = true;
@@ -31,37 +31,12 @@ namespace DCL
             DataStore.i.debugConfig.isDebugMode.OnChange += OnDebugModeSet;
 
             if (deferredMessagesDecoding) // We should be able to delete this code
-                deferredDecodingCoroutine = CoroutineStarter.Start(DeferredDecoding()); //
+                deferredDecodingCoroutine = CoroutineStarter.Start(DeferredDecoding());
 
             DCLCharacterController.OnCharacterMoved += SetPositionDirty;
 
             CommonScriptableObjects.sceneID.OnChange += OnCurrentSceneIdChange;
 
-            //TODO(Brian): Move those subscriptions elsewhere.
-            PoolManager.i.OnGet -= Environment.i.platform.physicsSyncController.MarkDirty;
-            PoolManager.i.OnGet += Environment.i.platform.physicsSyncController.MarkDirty;
-
-            PoolManager.i.OnGet -= Environment.i.platform.cullingController.objectsTracker.MarkDirty;
-            PoolManager.i.OnGet += Environment.i.platform.cullingController.objectsTracker.MarkDirty;
-        }
-
-        private void OnDebugModeSet(bool current, bool previous)
-        {
-            if (current == previous)
-                return;
-
-            if (current)
-            {
-                Environment.i.world.sceneBoundsChecker.SetFeedbackStyle(new SceneBoundsFeedbackStyle_RedFlicker());
-            }
-            else
-            {
-                Environment.i.world.sceneBoundsChecker.SetFeedbackStyle(new SceneBoundsFeedbackStyle_Simple());
-            }
-        }
-
-        public void Start()
-        {
             if (prewarmSceneMessagesPool)
             {
                 for (int i = 0; i < 100000; i++)
@@ -77,6 +52,21 @@ namespace DCL
 
             // Warmup some shader variants
             Resources.Load<ShaderVariantCollection>("ShaderVariantCollections/shaderVariants-selected").WarmUp();
+        }
+
+        private void OnDebugModeSet(bool current, bool previous)
+        {
+            if (current == previous)
+                return;
+
+            if (current)
+            {
+                Environment.i.world.sceneBoundsChecker.SetFeedbackStyle(new SceneBoundsFeedbackStyle_RedFlicker());
+            }
+            else
+            {
+                Environment.i.world.sceneBoundsChecker.SetFeedbackStyle(new SceneBoundsFeedbackStyle_Simple());
+            }
         }
 
         public void Dispose()

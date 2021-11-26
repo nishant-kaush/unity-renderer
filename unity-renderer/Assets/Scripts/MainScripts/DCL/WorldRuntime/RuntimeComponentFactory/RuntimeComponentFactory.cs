@@ -17,8 +17,6 @@ namespace DCL
 
         public IPoolableComponentFactory poolableComponentFactory { get; private set; }
 
-        public void Initialize() { CoroutineStarter.Start(InitializeCoroutine()); }
-
         IEnumerator InitializeCoroutine()
         {
             yield return null;
@@ -87,6 +85,8 @@ namespace DCL
             builders.Add((int) CLASS_ID_COMPONENT.GIZMOS, BuildPoolableComponent);
             builders.Add((int) CLASS_ID_COMPONENT.AVATAR_MODIFIER_AREA, BuildPoolableComponent);
             builders.Add((int) CLASS_ID_COMPONENT.QUEST_TRACKING_INFORMATION, BuildPoolableComponent);
+
+            CoroutineStarter.Start(InitializeCoroutine());
         }
 
         private IComponent BuildPoolableComponent(int classId) { return poolableComponentFactory.CreateItemFromId<BaseComponent>((CLASS_ID_COMPONENT) classId); }
@@ -116,6 +116,10 @@ namespace DCL
             IComponent newComponent = builders[classId](classId);
 
             return newComponent;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }
