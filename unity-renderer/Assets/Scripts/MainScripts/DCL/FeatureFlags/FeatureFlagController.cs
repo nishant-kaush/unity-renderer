@@ -29,4 +29,8 @@ public class FeatureFlagController : IFeatureFlagController
         Object.Destroy(featureFlagBridgeComponent);
         featureFlagBridgeComponent = null;
     }
+
+    public void Initialize()
+    {
+    }
 }

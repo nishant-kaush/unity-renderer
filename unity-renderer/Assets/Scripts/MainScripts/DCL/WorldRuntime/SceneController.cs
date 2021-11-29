@@ -21,13 +21,8 @@ namespace DCL
 
         private Coroutine deferredDecodingCoroutine;
 
-        public SceneController ()
+        public void Initialize()
         {
-            sceneSortDirty = true;
-            positionDirty = true;
-            lastSortFrame = 0;
-            enabled = true;
-
             DataStore.i.debugConfig.isDebugMode.OnChange += OnDebugModeSet;
 
             if (deferredMessagesDecoding) // We should be able to delete this code
@@ -52,6 +47,14 @@ namespace DCL
 
             // Warmup some shader variants
             Resources.Load<ShaderVariantCollection>("ShaderVariantCollections/shaderVariants-selected").WarmUp();
+        }
+
+        public SceneController ()
+        {
+            sceneSortDirty = true;
+            positionDirty = true;
+            lastSortFrame = 0;
+            enabled = true;
         }
 
         private void OnDebugModeSet(bool current, bool previous)

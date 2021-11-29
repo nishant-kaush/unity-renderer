@@ -113,4 +113,8 @@ public class HUDFactory : IHUDFactory
     public void Dispose()
     {
     }
+
+    public void Initialize()
+    {
+    }
 }

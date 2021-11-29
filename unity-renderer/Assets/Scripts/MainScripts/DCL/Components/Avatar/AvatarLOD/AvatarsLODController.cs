@@ -26,7 +26,7 @@ namespace DCL
         internal bool enabled;
         private UnityEngine.Camera mainCamera;
 
-        public AvatarsLODController()
+        public void Initialize()
         {
             gpuSkinningThrottlingCurve = Resources.Load<GPUSkinningThrottlingCurveSO>("GPUSkinningThrottlingCurve");
             DataStore.i.featureFlags.flags.OnChange += OnFeatureFlagChanged;
@@ -49,12 +49,14 @@ namespace DCL
             {
                 lodController.Dispose();
             }
+
             lodControllers.Clear();
 
             foreach (var keyValuePair in otherPlayers.Get())
             {
                 RegisterAvatar(keyValuePair.Key, keyValuePair.Value);
             }
+
             otherPlayers.OnAdded += RegisterAvatar;
             otherPlayers.OnRemoved += UnregisterAvatar;
         }
@@ -162,7 +164,7 @@ namespace DCL
         private bool IsInInvisibleDistance(float distance)
         {
             bool firstPersonCamera = CommonScriptableObjects.cameraMode.Get() == CameraMode.ModeId.FirstPerson;
-            
+
             return firstPersonCamera ? distance < AVATARS_INVISIBILITY_DISTANCE : distance < 0f; // < 0 is behind camera
         }
 
