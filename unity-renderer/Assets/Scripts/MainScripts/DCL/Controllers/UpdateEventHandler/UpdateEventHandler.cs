@@ -36,5 +36,9 @@ namespace DCL
                 dispatcher = null;
             }
         }
+
+        public void Initialize()
+        {
+        }
     }
 }
