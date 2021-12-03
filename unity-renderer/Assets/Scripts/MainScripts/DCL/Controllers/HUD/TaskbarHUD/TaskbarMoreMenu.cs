@@ -109,6 +109,13 @@ public class TaskbarMoreMenu : MonoBehaviour
 
     private void OnChangeProfile(RenderProfileWorld profile)
     {
+        if (DataStore.i.skyboxConfig.useProceduralSkybox.Get())
+        {
+            dayModeButton.gameObject.SetActive(false);
+            nightModeButton.gameObject.SetActive(false);
+            return;
+        }
+
         if (profile == RenderProfileManifest.i.defaultProfile)
         {
             dayModeButton.gameObject.SetActive(false);
